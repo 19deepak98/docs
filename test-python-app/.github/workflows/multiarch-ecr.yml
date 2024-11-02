@@ -36,10 +36,7 @@ jobs:
           file: ./Dockerfile  # Specify custom Dockerfile path if needed
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/your-ecr-repo-name:latest
-          build-args: |
-            ARG1=value1
-            ARG2=value2
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/test:latest
           target: production  # Specify a stage if using multi-stage Dockerfile
 
       - name: Logout from ECR
