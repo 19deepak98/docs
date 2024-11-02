@@ -2,8 +2,9 @@ name: Build and Push Multi-Arch Image to ECR
 
 on:
   push:
-    branches:
-      - test
+    branches: [ "test" ]
+  pull_request:
+    branches: [ "test" ]
 
 jobs:
   build-and-push:
