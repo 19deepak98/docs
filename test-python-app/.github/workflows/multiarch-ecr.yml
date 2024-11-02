@@ -27,6 +27,7 @@ jobs:
       - name: Log in to Amazon ECR
         id: ecr-login
         run: |
+          echo "Logging in to ECR..."
           aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com"
 
       - name: Build and Push Multi-Arch Image
@@ -37,7 +38,15 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/test:latest
-          target: production  # Specify a stage if using multi-stage Dockerfile
+        env:
+          DOCKER_BUILDKIT: 1  # Enable BuildKit for multi-arch builds
+          
+      - name: Verify Image in ECR
+        run: |
+          echo "Verifying the pushed image in ECR..."
+          aws ecr describe-images --repository-name test --region ${{ secrets.AWS_REGION }}
 
       - name: Logout from ECR
-        run: docker logout "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com"
+        run: |
+          echo "Logging out from ECR..."
+          docker logout "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com"
