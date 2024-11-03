@@ -35,7 +35,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./Dockerfile  # Specify custom Dockerfile path if needed
+          file: ../../test-python-app/Dockerfile  # Specify custom Dockerfile path if needed
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
