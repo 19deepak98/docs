@@ -29,8 +29,8 @@ jobs:
           echo "Logging in to ECR..."
           aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
 
-      # - name: Set Timestamp Tag
-      #   run: echo "TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+      - name: Set Timestamp Tag
+        run: echo "TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Build and Push Multi-Arch Image
         uses: docker/build-push-action@v4
@@ -40,8 +40,7 @@ jobs:
           push: true
           provenance: false
           platforms: linux/amd64,linux/arm64
-          # tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:${{ env.TIMESTAMP }}
-          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:${{ env.TIMESTAMP }}
           outputs: type=image
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for multi-arch builds
