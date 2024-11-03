@@ -3,8 +3,6 @@ name: Build and Push Multi-Arch Image to ECR
 on:
   push:
     branches: [ "test" ]
-  pull_request:
-    branches: [ "test" ]
 
 jobs:
   build-and-push:
@@ -34,8 +32,8 @@ jobs:
       - name: Build and Push Multi-Arch Image
         uses: docker/build-push-action@v4
         with:
-          context: .
-          file: ../../test-python-app/Dockerfile  # Specify custom Dockerfile path if needed
+          context: ./test-python-app               # Set context to the correct subdirectory
+          file: ./test-python-app/Dockerfilee  # Specify custom Dockerfile path if needed
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
