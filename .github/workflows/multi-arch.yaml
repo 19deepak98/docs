@@ -37,6 +37,7 @@ jobs:
           push: true
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
+          outputs: type=image
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for multi-arch builds
           
