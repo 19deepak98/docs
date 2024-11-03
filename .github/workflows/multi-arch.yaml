@@ -38,6 +38,7 @@ jobs:
           context: ./test-python-app               # Set context to the correct subdirectory
           file: ./test-python-app/Dockerfile  # Specify custom Dockerfile path if needed
           push: true
+          provenance: false
           platforms: linux/amd64,linux/arm64
           tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:${{ env.TIMESTAMP }}
           outputs: type=image
