@@ -22,13 +22,13 @@ jobs:
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ${{ secrets.AWS_REGION }}
+          aws-region: ap-south-1
 
       - name: Log in to Amazon ECR
         id: ecr-login
         run: |
           echo "Logging in to ECR..."
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com"
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
 
       - name: Build and Push Multi-Arch Image
         uses: docker/build-push-action@v4
@@ -37,16 +37,16 @@ jobs:
           file: ./Dockerfile  # Specify custom Dockerfile path if needed
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/test:latest
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for multi-arch builds
           
       - name: Verify Image in ECR
         run: |
           echo "Verifying the pushed image in ECR..."
-          aws ecr describe-images --repository-name test --region ${{ secrets.AWS_REGION }}
+          aws ecr describe-images --repository-name test --region ap-south-1
 
       - name: Logout from ECR
         run: |
           echo "Logging out from ECR..."
-          docker logout "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com"
+          docker logout "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
