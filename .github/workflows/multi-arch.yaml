@@ -49,6 +49,11 @@ jobs:
         run: |
           git fetch origin my-app
           git checkout my-app
+      
+      - name: Set Git User
+        run: |
+          git config --local user.email "deepakkumar21158@gmail.com"  # Replace with your email
+          git config --local user.name "19deepak98"   
 
       - name: Update values.yaml with New Tag
         run: |
