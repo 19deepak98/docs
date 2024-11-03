@@ -6,6 +6,9 @@ image:
   tag: 20241103052132
   pullPolicy: IfNotPresent
 
+imagePullSecrets:
+  name: ecr-secret
+
 service:
   type: NodePort
   port: 5000
