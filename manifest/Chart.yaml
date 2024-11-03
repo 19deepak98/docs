@@ -1,0 +1,12 @@
+apiVersion: v2           # Specifies Helm API version (use v2 for Helm 3)
+name: my-app             # Name of the chart
+description: A Helm chart for deploying my Python app
+
+version: 0.1.0           # Version of the chart itself
+appVersion: "1.0.0"      # Version of the application (typically matches your app's version)
+
+# Optional fields
+keywords:
+  - python
+  - web-app
+  - flask                # Example keywords related to the app
