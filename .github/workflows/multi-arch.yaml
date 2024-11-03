@@ -9,6 +9,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: testing
 
     steps:
       - name: Check out the code
@@ -20,15 +21,15 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v3
         with:
-          aws-access-key-id: ${{ vars.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ vars.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-south-1
 
       - name: Log in to Amazon ECR
         id: ecr-login
         run: |
           echo "Logging in to ECR..."
-          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin "${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
+          aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
 
       - name: Build and Push Multi-Arch Image
         uses: docker/build-push-action@v4
@@ -37,7 +38,7 @@ jobs:
           file: ./Dockerfile  # Specify custom Dockerfile path if needed
           push: true
           platforms: linux/amd64,linux/arm64
-          tags: ${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
+          tags: ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/test:latest
         env:
           DOCKER_BUILDKIT: 1  # Enable BuildKit for multi-arch builds
           
@@ -49,4 +50,4 @@ jobs:
       - name: Logout from ECR
         run: |
           echo "Logging out from ECR..."
-          docker logout "${{ vars.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
+          docker logout "${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com"
