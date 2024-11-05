@@ -79,7 +79,7 @@ jobs:
 
       - name: Update ArgoCD Application
         run: |
-          argocd login https://192.168.49.2:32525 --username admin --password "${{ secrets.ARGO_PASSWORD }}" --insecure
+          argocd login 192.168.49.2:32525 --username admin --password admin@1234 --insecure
           argocd app set ${{ env.MY_APP }} \
             -p image.tag=${{ env.TIMESTAMP }} \
             --values-literal-file ./my-app/values.yaml
