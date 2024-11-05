@@ -79,8 +79,8 @@ jobs:
 
       - name: Update ArgoCD Application
         run: |
-          argocd login 192.168.49.2:32525 --username admin --password "${{ secrets.ARGO_PASSWORD }}" --insecure
+          argocd login https://192.168.49.2:32525 --username admin --password "${{ secrets.ARGO_PASSWORD }}" --insecure
           argocd app set ${{ env.MY_APP }} \
             -p image.tag=${{ env.TIMESTAMP }} \
-            --values-literal-file ./deployment-repo/values-files/production/admin-values-production.yaml
+            --values-literal-file ./my-app/values.yaml
           argocd app actions run ${{ env.MY_APP }} restart --kind Deployment --all
