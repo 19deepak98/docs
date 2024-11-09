@@ -10,9 +10,8 @@ imagePullSecrets:
   name: ecr-secret
 
 service:
-  type: NodePort
+  type: ClusterIP
   port: 5000
-  nodePort: 30080  # Optional: fixed NodePort for easy access
 
 resources:
   requests:
