@@ -2,7 +2,7 @@ name: Build and Push Multi-Arch Image to ECR
 
 on:
   push:
-    branches: [ "github-ci" ]
+    branches: [ "test-app" ]
 
 jobs:
   build-and-push:
