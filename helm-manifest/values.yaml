@@ -3,7 +3,7 @@ replicaCount: 3
 
 image:
   repository: 961341535255.dkr.ecr.ap-south-1.amazonaws.com/test  # Replace with your actual image name
-  tag: "20241105044920"
+  tag: "20241109134623"
   pullPolicy: IfNotPresent
 
 imagePullSecrets:
